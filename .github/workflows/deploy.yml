@@ -1,4 +1,4 @@
-name: Healthcare Backend Deployment
+name: SAAS Backend Deployment
 
 on:
   push:
@@ -22,8 +22,8 @@ jobs:
       - name: Set up JDK 21
         uses: actions/setup-java@v3
         with:
-          java-version: '21'
-          distribution: 'temurin'
+          java-version: "21"
+          distribution: "temurin"
 
       - name: Build with Maven
         run: mvn clean package -DskipTests
@@ -54,12 +54,12 @@ jobs:
               sudo systemctl enable docker
             fi
 
-            if sudo docker ps -a --format '{{.Names}}' | grep -q healthcare-app; then
-              echo "Stopping and removing the existing healthcare container..."
-              sudo docker stop healthcare-app
-              sudo docker rm healthcare-app
+            if sudo docker ps -a --format '{{.Names}}' | grep -q saas; then
+              echo "Stopping and removing the existing SAAS container..."
+              sudo docker stop saas
+              sudo docker rm saas
             else
-              echo "No existing healthcare container to remove."
+              echo "No existing SAAS container to remove."
             fi
 
             echo "Pruning unused Docker images..."
@@ -71,7 +71,7 @@ jobs:
           ssh -v -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -i /tmp/private_key ${{ env.SSH_USER }}@${{ env.EC2_IP }} << 'EOF'
             sudo docker pull ${{ env.FULL_IMAGE_NAME }}:latest
 
-            sudo docker run -d -p 8080:8080 --name healthcare-app ${{ env.FULL_IMAGE_NAME }}:latest
+            sudo docker run -d -p 8080:8080 --name saas ${{ env.FULL_IMAGE_NAME }}:latest
           EOF
 
       - name: Clean up SSH key file

@@ -8,6 +8,6 @@ public class HelloController {
 
     @GetMapping("/api/welcome")
     public String welcome() {
-        return "Welcome to My Healthcare App Backend!";
+        return "Welcome to My saas App Backend!";
     }
 }
