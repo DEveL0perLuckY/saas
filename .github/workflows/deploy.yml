@@ -71,7 +71,7 @@ jobs:
           ssh -v -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -i /tmp/private_key ${{ env.SSH_USER }}@${{ env.EC2_IP }} << 'EOF'
             sudo docker pull ${{ env.FULL_IMAGE_NAME }}:latest
 
-            sudo docker run -d -p 8000:8000 --name healthcare-app ${{ env.FULL_IMAGE_NAME }}:latest
+            sudo docker run -d -p 8080:8080 --name healthcare-app ${{ env.FULL_IMAGE_NAME }}:latest
           EOF
 
       - name: Clean up SSH key file
